@@ -1,5 +1,2 @@
 ---
 # vars file for ospf-single-area
-hostname: 192.168.0.145
-username: admin
-password: 123

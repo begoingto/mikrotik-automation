@@ -1,0 +1,11 @@
+---
+# tasks file for ospf-single-area
+
+- name: Get IP addresses
+  community.routeros.api:
+    path: "ip address"
+  register: ip_addresses
+
+- name: Show IP address of first interface
+  ansible.builtin.debug:
+    msg: '{{ ip_addresses.msg }}'
