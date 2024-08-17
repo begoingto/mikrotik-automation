@@ -1,13 +1,17 @@
-- name: Deploy to bastion configure
-  hosts: routers
-  gather_facts: false
-  module_defaults:
-    group/community.routeros.api:
-      hostname: '{{ hostname }}'
-      username: '{{ username }}'
-      password: '{{ password }}'
-      tls: false
-      validate_certs: false
-      validate_cert_hostname: false
-  roles:
-    - ospf-single-area
+---
+- name: Import playbook
+  import_playbook: playbooks/test.yml
+
+# - name: Deploy to bastion configure
+#   hosts: routers
+#   gather_facts: false
+#   module_defaults:
+#     group/community.routeros.api:
+#       hostname: '{{ hostname }}'
+#       username: '{{ username }}'
+#       password: '{{ password }}'
+#       tls: false
+#       validate_certs: false
+#       validate_cert_hostname: false
+#   roles:
+#     - ospf-single-area

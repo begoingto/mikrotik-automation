@@ -1,11 +1,29 @@
 ---
 # tasks file for ospf-single-area
 
-- name: Get IP addresses
-  community.routeros.api:
-    path: "ip address"
-  register: ip_addresses
+- name: Deploy to bastion configure
+  hosts: routers
+  gather_facts: false
+  module_defaults:
+    group/community.routeros.api:
+      hostname: '{{ hostname }}'
+      username: '{{ username }}'
+      password: '{{ password }}'
+      tls: false
+      validate_certs: false
+      validate_cert_hostname: false
+  tasks:
+    - name: Include vars from group_vars
+      include_vars: "../group_vars/all.yml"
+      no_log: true
 
-- name: Show IP address of first interface
-  ansible.builtin.debug:
-    msg: '{{ ip_addresses.msg }}'
+    - name: Get IP addresses
+      community.routeros.api:
+        path: "ip address"
+      register: ip_addresses
+      no_log: true
+
+    - name: Show IP addresses
+      ansible.builtin.debug:
+        msg: "{{ item.address }}"
+      loop: "{{ ip_addresses.msg }}"
