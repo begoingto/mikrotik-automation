@@ -4,4 +4,12 @@
 cd ansible
 
 # Run the Ansible playbook
-ansible-playbook -i hosts main.yml
+ansible-playbook --verbose \
+                --inventory=hosts \
+                --syntax-check main.yml
+
+
+echo "Ansible deployment is processing..."
+ansible-playbook --verbose \
+                --inventory=hosts \
+                main.yml
