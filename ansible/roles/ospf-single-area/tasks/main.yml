@@ -12,6 +12,7 @@
     address: "{{ item.address }}"
     interface: "{{ item.interface }}"
   loop: "{{ routers[inventory_hostname].addresses }}"
+  no_log: true
 
 - name: "Add OSPF Instance to router {{ inventory_hostname }}"
   community.routeros.api:
@@ -20,8 +21,7 @@
     password: "{{ password }}"
     path: "routing ospf instance"
     add: "name={{ routers[inventory_hostname].ospf.instance_name }}"
-  register: result_instance
-  failed_when: result_instance.failed
+  ignore_errors: true
 
 - name: "Add OSPF Area to router {{ inventory_hostname }}"
   community.routeros.api:
@@ -30,8 +30,7 @@
     password: "{{ password }}"
     path: "routing ospf area"
     add: "instance={{ routers[inventory_hostname].ospf.instance_name }} name={{ routers[inventory_hostname].ospf.area_name }}"
-  register: result_area
-  failed_when: result_area.failed
+  ignore_errors: true
 
 - name: "Add OSPF Interface Template to router {{ inventory_hostname }}"
   ansible.builtin.include_tasks: "{{ inventory_dir }}/tasks/ospf-interface.yml"
