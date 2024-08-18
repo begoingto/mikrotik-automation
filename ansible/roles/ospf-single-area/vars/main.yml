@@ -48,7 +48,7 @@ routers:
       - interface: ether8
         address: 192.168.2.254/24
     ospf:
-      instance_name: R1_inst
+      instance_name: R2_inst
       area_name: Area_1
       interface_template:
         - interface: ether2
@@ -83,7 +83,7 @@ routers:
       - interface: ether8
         address: 192.168.3.254/24
     ospf:
-      instance_name: R1_inst
+      instance_name: R3_inst
       area_name: Area_1
       interface_template:
         - interface: ether3
@@ -118,7 +118,7 @@ routers:
       - interface: ether8
         address: 192.168.4.254/24
     ospf:
-      instance_name: R1_inst
+      instance_name: R4_inst
       area_name: Area_1
       interface_template:
         - interface: ether4
