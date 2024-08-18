@@ -47,6 +47,30 @@ routers:
         address: 20.20.20.1/30
       - interface: ether8
         address: 192.168.2.254/24
+    ospf:
+      instance_name: R1_inst
+      area_name: Area_1
+      interface_template:
+        - interface: ether2
+          type: ptp
+          passive: false
+          cost: 10
+          area: Area_1
+        - interface: ether7
+          type: ptp
+          passive: false
+          cost: 10
+          area: Area_1
+        - interface: ether5
+          type: ptp
+          passive: false
+          cost: 10
+          area: Area_1
+        - interface: ether8
+          type: broadcast
+          passive: true
+          cost: 10
+          area: Area_1
 
   R3:
     addresses:
@@ -58,6 +82,30 @@ routers:
         address: 30.30.30.1/30
       - interface: ether8
         address: 192.168.3.254/24
+    ospf:
+      instance_name: R1_inst
+      area_name: Area_1
+      interface_template:
+        - interface: ether3
+          type: ptp
+          passive: false
+          cost: 10
+          area: Area_1
+        - interface: ether6
+          type: ptp
+          passive: false
+          cost: 10
+          area: Area_1
+        - interface: ether4
+          type: ptp
+          passive: false
+          cost: 10
+          area: Area_1
+        - interface: ether8
+          type: broadcast
+          passive: true
+          cost: 10
+          area: Area_1
 
   R4:
     addresses:
@@ -69,3 +117,27 @@ routers:
         address: 40.40.40.2/30
       - interface: ether8
         address: 192.168.4.254/24
+    ospf:
+      instance_name: R1_inst
+      area_name: Area_1
+      interface_template:
+        - interface: ether4
+          type: ptp
+          passive: false
+          cost: 10
+          area: Area_1
+        - interface: ether6
+          type: ptp
+          passive: false
+          cost: 10
+          area: Area_1
+        - interface: ether3
+          type: ptp
+          passive: false
+          cost: 10
+          area: Area_1
+        - interface: ether8
+          type: broadcast
+          passive: true
+          cost: 10
+          area: Area_1
