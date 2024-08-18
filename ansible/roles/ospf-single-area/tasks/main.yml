@@ -16,7 +16,7 @@
 
 - name: "Add OSPF Instance to router {{ inventory_hostname }}"
   community.routeros.api:
-    hostname: "{{ hostname }}"
+    hostname: "{{ ansible_host }}"
     username: "{{ username }}"
     password: "{{ password }}"
     path: "routing ospf instance"
@@ -25,7 +25,7 @@
 
 - name: "Add OSPF Area to router {{ inventory_hostname }}"
   community.routeros.api:
-    hostname: "{{ hostname }}"
+    hostname: "{{ ansible_host }}"
     username: "{{ username }}"
     password: "{{ password }}"
     path: "routing ospf area"

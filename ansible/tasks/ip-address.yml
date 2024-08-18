@@ -1,6 +1,6 @@
 - name: "Find And Modify IP address from {{ inventory_hostname }}"
   community.routeros.api_find_and_modify:
-    hostname: "{{ hostname }}"
+    hostname: "{{ ansible_host }}"
     username: "{{ username }}"
     password: "{{ password }}"
     path: "ip address"
@@ -14,7 +14,7 @@
 
 - name: "Add IP address to {{ inventory_hostname }}"
   community.routeros.api:
-    hostname: "{{ hostname }}"
+    hostname: "{{ ansible_host }}"
     username: "{{ username }}"
     password: "{{ password }}"
     path: "ip address"

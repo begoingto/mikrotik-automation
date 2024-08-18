@@ -1,6 +1,6 @@
 - name: Clean ip address
   community.routeros.api:
-    hostname: "{{ hostname }}"
+    hostname: "{{ ansible_host }}"
     username: "{{ username }}"
     password: "{{ password }}"
     path: "ip address"
@@ -27,7 +27,7 @@
 
 - name: Remove Ip address on router {{ inventory_hostname }}
   community.routeros.api:
-    hostname: "{{ hostname }}"
+    hostname: "{{ ansible_host }}"
     username: "{{ username }}"
     password: "{{ password }}"
     path: "ip address"

@@ -1,6 +1,6 @@
 - name: "Find and Modify OSPF Interface Template to router {{ inventory_hostname }}"
   community.routeros.api_find_and_modify:
-    hostname: "{{ hostname }}"
+    hostname: "{{ ansible_host }}"
     username: "{{ username }}"
     password: "{{ password }}"
     path: "routing ospf interface-template"
@@ -18,7 +18,7 @@
 
 - name: "Add OSPF Interface Template to router {{ inventory_hostname }}"
   community.routeros.api:
-    hostname: "{{ hostname }}"
+    hostname: "{{ ansible_host }}"
     username: "{{ username }}"
     password: "{{ password }}"
     path: "routing ospf interface-template"

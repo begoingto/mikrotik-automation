@@ -6,7 +6,7 @@
   gather_facts: false
   module_defaults:
     group/community.routeros.api:
-      hostname: '{{ hostname }}'
+      hostname: '{{ ansible_host }}'
       username: '{{ username }}'
       password: '{{ password }}'
       tls: false
