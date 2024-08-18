@@ -1,0 +1,39 @@
+- name: Clean ip address
+  community.routeros.api:
+    hostname: "{{ hostname }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    path: "ip address"
+    extended_query:
+      attributes:
+        - ".id"
+        - "address"
+        - "interface"
+      where:
+        - attribute: "interface"
+          is: "!="
+          value: "ether1"
+  register: rm
+  no_log: true
+
+- name: Address map interface
+  ansible.builtin.set_fact:
+    diff_interfaces: >-
+      {{
+        (rm.msg | map(attribute='interface') | list)
+        | difference((routers[inventory_hostname].addresses | map(attribute='interface') | list))
+      }}
+  no_log: true
+
+- name: Remove Ip address on router {{ inventory_hostname }}
+  community.routeros.api:
+    hostname: "{{ hostname }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    path: "ip address"
+    remove: "{{ rmx['.id'] }}"
+  loop: "{{ rm.msg }}"
+  when: rmx.interface in diff_interfaces
+  loop_control:
+    loop_var: rmx
+  no_log: true

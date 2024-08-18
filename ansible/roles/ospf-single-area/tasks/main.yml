@@ -5,41 +5,44 @@
   ansible.builtin.debug:
     msg: 'Route Name: {{ inventory_hostname }}'
 
-- name: "Add IP addresses to router {{ inventory_hostname }}"
-  ansible.builtin.include_tasks: "{{ inventory_dir }}/tasks/ip-address.yml"
-  vars:
-    _act: "{{ item.action }}"
-    address: "{{ item.address }}"
-    interface: "{{ item.interface }}"
-  loop: "{{ routers[inventory_hostname].addresses }}"
+# - name: "Add IP addresses to router {{ inventory_hostname }}"
+#   ansible.builtin.include_tasks: "{{ inventory_dir }}/tasks/ip-address.yml"
+#   vars:
+#     _act: "{{ item.action }}"
+#     address: "{{ item.address }}"
+#     interface: "{{ item.interface }}"
+#   loop: "{{ routers[inventory_hostname].addresses }}"
 
-- name: "Add OSPF Instance to router {{ inventory_hostname }}"
-  community.routeros.api:
-    hostname: "{{ hostname }}"
-    username: "{{ username }}"
-    password: "{{ password }}"
-    path: "routing ospf instance"
-    add: "name={{ routers[inventory_hostname].ospf.instance_name }}"
-  register: result_instance
-  failed_when: result_instance.failed
+# - name: "Add OSPF Instance to router {{ inventory_hostname }}"
+#   community.routeros.api:
+#     hostname: "{{ hostname }}"
+#     username: "{{ username }}"
+#     password: "{{ password }}"
+#     path: "routing ospf instance"
+#     add: "name={{ routers[inventory_hostname].ospf.instance_name }}"
+#   register: result_instance
+#   failed_when: result_instance.failed
 
-- name: "Add OSPF Area to router {{ inventory_hostname }}"
-  community.routeros.api:
-    hostname: "{{ hostname }}"
-    username: "{{ username }}"
-    password: "{{ password }}"
-    path: "routing ospf area"
-    add: "instance={{ routers[inventory_hostname].ospf.instance_name }} name={{ routers[inventory_hostname].ospf.area_name }}"
-  register: result_area
-  failed_when: result_area.failed
+# - name: "Add OSPF Area to router {{ inventory_hostname }}"
+#   community.routeros.api:
+#     hostname: "{{ hostname }}"
+#     username: "{{ username }}"
+#     password: "{{ password }}"
+#     path: "routing ospf area"
+#     add: "instance={{ routers[inventory_hostname].ospf.instance_name }} name={{ routers[inventory_hostname].ospf.area_name }}"
+#   register: result_area
+#   failed_when: result_area.failed
 
-- name: "Add OSPF Interface Template to router {{ inventory_hostname }}"
-  ansible.builtin.include_tasks: "{{ inventory_dir }}/tasks/ospf-interface.yml"
-  vars:
-    _area: "{{ routers[inventory_hostname].ospf.area_name }}"
-    _interface: "{{ item.interface }}"
-    _type: "{{ item.type }}"
-    _cost: "{{ item.cost }}"
-    _passive: "{{ item.passive }}"
-  loop: "{{ routers[inventory_hostname].ospf.interface_template }}"
-  no_log: true
+# - name: "Add OSPF Interface Template to router {{ inventory_hostname }}"
+#   ansible.builtin.include_tasks: "{{ inventory_dir }}/tasks/ospf-interface.yml"
+#   vars:
+#     _area: "{{ routers[inventory_hostname].ospf.area_name }}"
+#     _interface: "{{ item.interface }}"
+#     _type: "{{ item.type }}"
+#     _cost: "{{ item.cost }}"
+#     _passive: "{{ item.passive }}"
+#   loop: "{{ routers[inventory_hostname].ospf.interface_template }}"
+#   no_log: true
+
+- name: Clean up ip address on router {{ inventory_hostname }}
+  ansible.builtin.include_tasks: "{{ inventory_dir }}/tasks/clean-ip-address.yml"
