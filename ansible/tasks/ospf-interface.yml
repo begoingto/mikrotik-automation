@@ -1,0 +1,27 @@
+- name: "Find and Modify OSPF Interface Template to router {{ inventory_hostname }}"
+  community.routeros.api_find_and_modify:
+    hostname: "{{ hostname }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    path: "routing ospf interface-template"
+    find:
+      interfaces: "{{ item.interface }}"
+    values:
+      area: "{{ routers[inventory_hostname].ospf.area_name }}"
+      interfaces: "{{ item.interface }}"
+      type: "{{ item.type }}"
+      cost: "{{ item.cost }}"
+      passive: "{{ item.passive | default(false) }}"
+  register: result
+  failed_when: result.failed
+  no_log: true
+
+- name: "Add OSPF Interface Template to router {{ inventory_hostname }}"
+  community.routeros.api:
+    hostname: "{{ hostname }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    path: "routing ospf interface-template"
+    add: "area={{ _area }} interfaces={{ _interface }} type={{ _type }} cost={{ _cost }} passive={{ _passive }}"
+  when: result.match_count == 0
+  no_log: true

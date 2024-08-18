@@ -17,13 +17,5 @@
       include_vars: "../group_vars/all.yml"
       no_log: true
 
-    - name: Get IP addresses
-      community.routeros.api:
-        path: "ip address"
-      register: ip_addresses
-      no_log: true
-
-    - name: Show IP addresses
-      ansible.builtin.debug:
-        msg: "{{ item.address }}"
-      loop: "{{ ip_addresses.msg }}"
+    - name: Test ping module
+      ansible.builtin.ping:

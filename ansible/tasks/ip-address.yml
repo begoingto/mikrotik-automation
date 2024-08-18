@@ -1,0 +1,24 @@
+- name: "Add IP address to {{ inventory_hostname }}"
+  community.routeros.api:
+    hostname: "{{ hostname }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    path: "ip address"
+    add: "address={{ address }} interface={{ interface }}"
+  when: _act == 'a'
+  no_log: true
+
+- name: "Find And Modify IP address from {{ inventory_hostname }}"
+  community.routeros.api_find_and_modify:
+    hostname: "{{ hostname }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    path: "ip address"
+    find:
+      interface: "{{ interface }}"
+    values:
+      address: "{{ address }}"
+    require_matches_min: 1
+    require_matches_max: 1
+  when: _act == 'm'
+  no_log: true

@@ -1,11 +1,70 @@
 ---
 # tasks file for ospf-single-area
 
-- name: Get IP addresses
-  community.routeros.api:
-    path: "ip address"
-  register: ip_addresses
-
-- name: Show IP address of first interface
+- name: Show Route Name
   ansible.builtin.debug:
-    msg: '{{ ip_addresses.msg }}'
+    msg: 'Route Name: {{ inventory_hostname }}'
+
+# - name: "Check if IP address exists on {{ inventory_hostname }}"
+#   community.routeros.api:
+#     hostname: "{{ hostname }}"
+#     username: "{{ username }}"
+#     password: "{{ password }}"
+#     path: "ip address"
+#   register: ip_check
+#   no_log: true
+
+# - name: Set existed_ips
+#   ansible.builtin.set_fact:
+#     existed_ips: "{{ ip_check.msg | map(attribute='address') | list }}"
+#     existed_interfaces: "{{ ip_check.msg | map(attribute='interface') | list }}"
+#     addresses: "{{ routers[inventory_hostname].addresses | map('combine', {'action': 'a'}) | list }}"
+#   no_log: true
+
+# - name: Set Existed Addresses
+#   ansible.builtin.set_fact:
+#     addresses: "{{ addresses[:y_index] + [addresses[y_index] | combine({ 'action': 'm' })] +  addresses[y_index + 1:] }}"
+#   loop: "{{ addresses }}"
+#   when: y.interface in existed_interfaces or y.address in existed_ips
+#   loop_control:
+#     loop_var: y
+#     index_var: y_index
+#   no_log: true
+
+# - name: "Add IP addresses to router {{ inventory_hostname }}"
+#   ansible.builtin.include_tasks: "{{ inventory_dir }}/tasks/ip-address.yml"
+#   vars:
+#     _act: "{{ item.action }}"
+#     address: "{{ item.address }}"
+#     interface: "{{ item.interface }}"
+#   loop: "{{ addresses }}"
+#   no_log: true
+
+# - name: "Add OSPF Instance to router {{ inventory_hostname }}"
+#   community.routeros.api:
+#     hostname: "{{ hostname }}"
+#     username: "{{ username }}"
+#     password: "{{ password }}"
+#     path: "routing ospf instance"
+#     add: "name={{ routers[inventory_hostname].ospf.instance_name }}"
+#   ignore_errors: true
+
+# - name: "Add OSPF Area to router {{ inventory_hostname }}"
+#   community.routeros.api:
+#     hostname: "{{ hostname }}"
+#     username: "{{ username }}"
+#     password: "{{ password }}"
+#     path: "routing ospf area"
+#     add: "instance={{ routers[inventory_hostname].ospf.instance_name }} name={{ routers[inventory_hostname].ospf.area_name }}"
+#   ignore_errors: true
+
+# - name: "Add OSPF Interface Template to router {{ inventory_hostname }}"
+#   ansible.builtin.include_tasks: "{{ inventory_dir }}/tasks/ospf-interface.yml"
+#   vars:
+#     _area: "{{ routers[inventory_hostname].ospf.area_name }}"
+#     _interface: "{{ item.interface }}"
+#     _type: "{{ item.type }}"
+#     _cost: "{{ item.cost }}"
+#     _passive: "{{ item.passive | default(false) }}"
+#   loop: "{{ routers[inventory_hostname].ospf.interface_template }}"
+#   no_log: true
